@@ -1,0 +1,62 @@
+.cover__photo__wrapper {
+  position: relative;
+  /* padding-bottom: 130px; */
+}
+.cover__photo {
+  object-fit: cover;
+  max-height: 60vh;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.position__bottom__cover {
+  align-items: center;
+  /* position: absolute; */
+  bottom: 0;
+  width: 100%;
+}
+.profile__image {
+  margin-top: 10px;
+  height: 160px;
+  width: 160px;
+  border-radius: 100%;
+  object-fit: cover;
+  margin-left: 30px;
+  border: 2px solid black;
+}
+.profile__name_wrapper {
+  width: 100%;
+  margin-left: 10px;
+}
+.edit__button__wrapper {
+  margin-right: 30px;
+}
+
+/* medium screen */
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+  .profile__image {
+    margin-left: 10px;
+  }
+  .profile__name_wrapper {
+    width: auto;
+    padding-top: 10px;
+  }
+}
+
+/* small screen */
+@media only screen and (max-width: 576px) {
+  .cover__photo__wrapper {
+    padding-bottom: 70px;
+  }
+  .profile__image {
+    margin-left: 5px;
+    height: 100px;
+    width: 100px;
+  }
+  .profile__name_wrapper {
+    padding-top: 20px;
+  }
+  .profile__name {
+    font-size: 1rem;
+  }
+}

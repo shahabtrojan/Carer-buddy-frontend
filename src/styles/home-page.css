@@ -1,0 +1,34 @@
+.welcome__paragraph h1 {
+  color: #00b4ea;
+  font-size: 1.75rem;
+}
+.welcome__paragraph h2 {
+  color: #28397a;
+  font-size: 1.75rem;
+}
+.welcome__paragraph p {
+  color: #28397a;
+  margin-bottom: 1rem;
+  font-size: inherit;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+.front_page_news_event img {
+  width: 100%;
+  height: auto;
+  border-right: 10px solid #ed145a;
+  border-bottom: 10px solid #ed145a;
+}
+
+.front_page_news_event h3 {
+  font-size: calc(1.3rem + 0.6vw);
+  background: #ed145a;
+  padding: 1rem;
+  color: #fefefe;
+}
+
+.how__we__help {
+  background: #d6f3fc
+    url(https://carersek.org.uk/wp-content/uploads/2020/05/white_logo.png) top
+    left / contain no-repeat;
+}

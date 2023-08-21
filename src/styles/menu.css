@@ -1,0 +1,10 @@
+.menu__wrapper {
+  min-width: 200px;
+  .menu__item {
+    border-left: 2px solid var(--background-color);
+  }
+  .menu__item:hover {
+    border-left: 2px solid var(--primary-color);
+    color: var(--primary-color);
+  }
+}

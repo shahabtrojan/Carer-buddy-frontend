@@ -7,6 +7,9 @@ import Box from "@mui/material/Box";
 import PersonalInformation from "./components/PersonalInformation";
 import SelectInterest from "./components/SelectInterest";
 import SelectDisease from "./components/SelectDisease";
+import SelectLocation from "./components/SelectLocation";
+import { CircularProgress, LinearProgress, Stack } from "@mui/material";
+import CustomProgressBar from "../custom-progressbar/CustomProgressBar";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,8 +55,17 @@ export default function TabsOption() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider", maxWidth: 600 }}>
+    <Box sx={{ width: "100%", position: "relative" }}>
+      <Stack sx={{ position: "absolute", top: 5, right: 0 }}>
+        <CustomProgressBar />
+      </Stack>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          maxWidth: 600,
+        }}
+      >
         <Tabs
           variant="scrollable"
           scrollButtons="auto"
@@ -64,6 +76,7 @@ export default function TabsOption() {
           <Tab label="Personal Information" {...a11yProps(1)} />
           <Tab label="Interest" {...a11yProps(0)} />
           <Tab label="Disease" {...a11yProps(2)} />
+          <Tab label="Location" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -80,6 +93,12 @@ export default function TabsOption() {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <SelectDisease
+          isDisabled={isDisabled}
+          handleChangeDisableStatus={handleChangeDisableStatus}
+        />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <SelectLocation
           isDisabled={isDisabled}
           handleChangeDisableStatus={handleChangeDisableStatus}
         />

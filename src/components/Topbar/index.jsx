@@ -18,13 +18,20 @@ import Profile from "./components/Profile";
 import Notifications from "./components/Notifications";
 import Messages from "./components/Messages";
 import MenuPopup from "../menu-popup/MenuPopup";
+import { useAppContext } from "../../hooks/AppContext";
 
 const drawerWidth = 200;
-const navItems = [
+const authenticatedLinks = [
   { label: "Home", value: "/" },
   { label: "Feed", value: "/feed" },
-  { label: "Contact", value: "/contact" },
+  // { label: "Contact", value: "/contact" },
 ];
+const unAuthenticatedLinks = [
+  { label: "Home", value: "/" },
+  { label: "Login", value: "/auth/login" },
+  { label: "Signup", value: "/auth/signup" },
+];
+
 const checkSelected = (value) => {
   if (window.location.pathname === value) {
     return true;
@@ -33,13 +40,19 @@ const checkSelected = (value) => {
 };
 
 function Topbar(props) {
+  const { isAuthenticated } = useAppContext();
+  const [navItems, setNavItems] = React.useState(
+    isAuthenticated ? authenticatedLinks : unAuthenticatedLinks
+  );
+  React.useEffect(() => {
+    setNavItems([
+      ...(isAuthenticated ? authenticatedLinks : unAuthenticatedLinks),
+    ]);
+  }, [isAuthenticated]);
+
   const navigate = useNavigate();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleOpenMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -78,7 +91,6 @@ function Topbar(props) {
 
   return (
     <>
-      <MenuPopup anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar component="nav">
@@ -92,14 +104,16 @@ function Topbar(props) {
             >
               <MenuIcon />
             </IconButton>
-            <Box
-              flexGrow={1}
-              className="d-flex d-sm-none justify-content-end align-items-center"
-            >
-              <Messages handleOpenMenu={handleOpenMenu} />
-              <Notifications handleOpenMenu={handleOpenMenu} />
-              <Profile />
-            </Box>
+            {isAuthenticated && (
+              <Box
+                flexGrow={1}
+                className="d-flex d-sm-none justify-content-end align-items-center"
+              >
+                <Messages />
+                <Notifications />
+                <Profile />
+              </Box>
+            )}
             <Typography
               variant="h6"
               component="div"
@@ -118,11 +132,15 @@ function Topbar(props) {
                   {item.label}
                 </Button>
               ))}
-              <Messages handleOpenMenu={handleOpenMenu} />
+              {isAuthenticated && (
+                <>
+                  <Messages />
 
-              <Notifications handleOpenMenu={handleOpenMenu} />
+                  <Notifications />
 
-              <Profile />
+                  <Profile />
+                </>
+              )}
             </Box>
           </Toolbar>
         </AppBar>

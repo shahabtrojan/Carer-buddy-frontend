@@ -1,0 +1,11 @@
+.warning__wrapper {
+  position: fixed;
+  bottom: 30;
+  right: 40;
+  color: black;
+  background-color: silver;
+  border-width: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -8,22 +8,49 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { signup_user } from "../../dal/user";
+import { useSnackbar } from "notistack";
+import { useAppContext } from "../../hooks/AppContext";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+  const { setProfile, setIsAuthenticated } = useAppContext();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const handleSubmit = async (event) => {
+    setIsLoading(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const postData = {
+      first_name: data.get("first_name"),
+      last_name: data.get("last_name"),
       email: data.get("email"),
       password: data.get("password"),
-    });
+    };
+    const response = await signup_user(postData);
+    if (response.code === 200) {
+      navigate("/auth/login");
+      enqueueSnackbar("User Created Successfully", { variant: "success" });
+    } else {
+      enqueueSnackbar(response.message, { variant: "error" });
+    }
+    setIsLoading(false);
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Box
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -40,10 +67,10 @@ export default function SignUp() {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="given-name"
-                name="firstName"
+                name="first_name"
                 required
                 fullWidth
-                id="firstName"
+                id="first_name"
                 label="First Name"
                 autoFocus
               />
@@ -52,9 +79,9 @@ export default function SignUp() {
               <TextField
                 required
                 fullWidth
-                id="lastName"
+                id="last_name"
                 label="Last Name"
-                name="lastName"
+                name="last_name"
                 autoComplete="family-name"
               />
             </Grid>
@@ -84,6 +111,7 @@ export default function SignUp() {
             type="submit"
             fullWidth
             variant="contained"
+            disabled={isLoading}
             sx={{ mt: 3, mb: 2 }}
           >
             Sign Up

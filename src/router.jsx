@@ -15,7 +15,6 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import InterestSelect from "./components/interest-select/InterestSelect";
 import ChatPage from "./pages/chat-page/ChatPage";
 import FeedPage from "./pages/feed/FeedPage";
-// import InterestSelect from "./components/interest-select/InterestSelect";
 
 const PublicRouteAuthentication = () => {
   if (localStorage.getItem("token")) {
@@ -26,7 +25,7 @@ const PublicRouteAuthentication = () => {
 };
 const PrivateRouteAuthentication = () => {
   if (!localStorage.getItem("token")) {
-    return <Navigate to="/auth/login" />;
+    return <Navigate to="/" />;
   } else {
     return <Outlet />;
   }
@@ -40,9 +39,9 @@ function AppRoutes() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
           </Route>
-          <Route path="/" element={<PrivateRouteAuthentication />}>
-            <Route path="/" element={<Topbar />}>
-              <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Topbar />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<PrivateRouteAuthentication />}>
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/chat" element={<ChatPage />} />
               <Route path="/feed" element={<FeedPage />} />

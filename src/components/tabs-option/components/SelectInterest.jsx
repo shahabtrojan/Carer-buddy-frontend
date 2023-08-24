@@ -3,9 +3,33 @@ import React, { useEffect, useState } from "react";
 import { interestList } from "../../../utils/constant";
 import MuiSelect from "./MuiSelect";
 import TabFooter from "./TabFooter";
+import { useAppContext } from "../../../hooks/AppContext";
+import { useSnackbar } from "notistack";
+import { update_interest } from "../../../dal/user";
 
 function SelectInterest({ isDisabled, handleChangeDisableStatus }) {
-  const [interest, setInterest] = useState(["", "", ""]);
+  const { enqueueSnackbar } = useSnackbar();
+  const { profile, setProfile } = useAppContext();
+  const [interest, setInterest] = useState([
+    profile.interests[0] || "",
+    profile.interests[1] || "",
+    profile.interests[2] || "",
+  ]);
+
+  const handleUpdateInterest = async () => {
+    const postData = {
+      interests: [...interest],
+    };
+    const response = await update_interest(postData);
+    if (response.code === 200) {
+      setProfile(response.user);
+      localStorage.setItem("profile", JSON.stringify(response.user));
+      handleChangeDisableStatus(true);
+      enqueueSnackbar(response.message, { variant: "success" });
+    } else {
+      enqueueSnackbar(response.message, { variant: "error" });
+    }
+  };
 
   const handleChange = (e, index) => {
     interest[index] = e.target.value;
@@ -14,6 +38,11 @@ function SelectInterest({ isDisabled, handleChangeDisableStatus }) {
 
   useEffect(() => {
     return () => {
+      setInterest([
+        profile.interests[0] || "",
+        profile.interests[1] || "",
+        profile.interests[2] || "",
+      ]);
       handleChangeDisableStatus(true);
     };
   }, []);
@@ -32,6 +61,7 @@ function SelectInterest({ isDisabled, handleChangeDisableStatus }) {
         <TabFooter
           isDisabled={isDisabled}
           handleChangeDisableStatus={handleChangeDisableStatus}
+          handleUpdate={handleUpdateInterest}
         />
       </div>
     </Box>

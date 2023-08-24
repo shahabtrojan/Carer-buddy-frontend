@@ -1,12 +1,17 @@
 import React, { useRef, useState } from "react";
 import EditProfileDataButton from "./EditProfileDataButton";
-
-const defaultImg =
-  "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80";
+import { useAppContext } from "../../../hooks/AppContext";
+import { update_personal_info } from "../../../dal/user";
+import { useSnackbar } from "notistack";
+import { defaultImg } from "../../../utils/constant";
 
 function ProfileCover() {
+  const { enqueueSnackbar } = useSnackbar();
+  const { profile, setProfile } = useAppContext(0);
   const profileRef = useRef(null);
-  const [profileImgPreview, setProfileImgPreview] = useState(defaultImg);
+  const [profileImgPreview, setProfileImgPreview] = useState(
+    profile.image || defaultImg
+  );
   const [profileImg, setProfileImg] = useState(null);
   const handleChangeImage = (e) => {
     if (e.target.files.length > 0) {
@@ -17,6 +22,25 @@ function ProfileCover() {
   const handleCancel = () => {
     setProfileImgPreview(defaultImg);
     setProfileImg(null);
+  };
+  const handleUpdateImage = async () => {
+    const reader = new FileReader();
+    reader.readAsDataURL(profileImg);
+    reader.onload = async () => {
+      const payload = { ...profile, image: reader.result };
+      const response = await update_personal_info(payload);
+      if (response.code === 200) {
+        localStorage.setItem("profile", JSON.stringify(payload));
+        setProfile({ ...payload });
+        setProfileImg(null);
+        enqueueSnackbar(response.message, { variant: "success" });
+      } else {
+        enqueueSnackbar(response.message, { variant: "error" });
+      }
+    };
+    reader.onerror = function (error) {
+      console.log("Error: ", error);
+    };
   };
   return (
     <div className="col-12 cover__photo__wrapper">
@@ -44,8 +68,13 @@ function ProfileCover() {
           />
         </div>
         <div className="profile__name_wrapper">
-          <h4 className="profile__name">Arslan Ashiq</h4>
-          {profileImg && <EditProfileDataButton handleCancel={handleCancel} />}
+          <h4 className="profile__name">{`${profile.first_name} ${profile.last_name}`}</h4>
+          {profileImg && (
+            <EditProfileDataButton
+              handleCancel={handleCancel}
+              handleUpdate={handleUpdateImage}
+            />
+          )}
         </div>
         {/* <EditProfileDataButton className="d-none d-md-block" /> */}
       </div>

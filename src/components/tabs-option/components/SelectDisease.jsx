@@ -3,27 +3,56 @@ import React, { useEffect, useState } from "react";
 import { interestList } from "../../../utils/constant";
 import MuiSelect from "./MuiSelect";
 import TabFooter from "./TabFooter";
+import { update_disease } from "../../../dal/user";
+import { useSnackbar } from "notistack";
+import { useAppContext } from "../../../hooks/AppContext";
 
 function SelectDisease({ isDisabled, handleChangeDisableStatus }) {
-  const [interest, setInterest] = useState(["", "", ""]);
+  const { enqueueSnackbar } = useSnackbar();
+  const { profile, setProfile } = useAppContext();
+  const [diseases, setDiseases] = useState([
+    profile.diseases[0] || "",
+    profile.diseases[1] || "",
+    profile.diseases[2] || "",
+  ]);
+
+  const handleUpdateDiseases = async () => {
+    const postData = {
+      diseases: [...diseases],
+    };
+    const response = await update_disease(postData);
+    if (response.code === 200) {
+      setProfile(response.user);
+      localStorage.setItem("profile", JSON.stringify(response.user));
+      handleChangeDisableStatus(true);
+      enqueueSnackbar(response.message, { variant: "success" });
+    } else {
+      enqueueSnackbar(response.message, { variant: "error" });
+    }
+  };
 
   const handleChange = (e, index) => {
-    interest[index] = e.target.value;
-    setInterest([...interest]);
+    diseases[index] = e.target.value;
+    setDiseases([...diseases]);
   };
 
   useEffect(() => {
     return () => {
+      setDiseases([
+        profile.diseases[0] || "",
+        profile.diseases[1] || "",
+        profile.diseases[2] || "",
+      ]);
       handleChangeDisableStatus(true);
     };
   }, []);
   return (
     <Box sx={{ width: "100%" }}>
       <div className="row">
-        {interest.map((single_interest, index) => (
+        {diseases.map((single_diseases, index) => (
           <MuiSelect
             label={`Disease ${index + 1}`}
-            value={single_interest}
+            value={single_diseases}
             handleChange={(e) => handleChange(e, index)}
             isDisabled={isDisabled}
             optionList={interestList}
@@ -32,6 +61,7 @@ function SelectDisease({ isDisabled, handleChangeDisableStatus }) {
         <TabFooter
           isDisabled={isDisabled}
           handleChangeDisableStatus={handleChangeDisableStatus}
+          handleUpdate={handleUpdateDiseases}
         />
       </div>
     </Box>

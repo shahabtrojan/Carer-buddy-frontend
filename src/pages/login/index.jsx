@@ -10,35 +10,50 @@ import { Avatar, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { login_user } from "../../dal/user";
 import { useSnackbar } from "notistack";
+import { useAppContext } from "../../hooks/AppContext";
 
 export default function Login() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const { setProfile, setIsAuthenticated } = useAppContext();
+  const [isLoading, setIsLoading] = React.useState(false);
   const handleSubmit = async (event) => {
+    setIsLoading(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
     const postData = {
       email: data.get("email"),
       password: data.get("password"),
     };
-    const resp = await login_user(postData);
-    if (resp?.code === 200) {
+    const response = await login_user(postData);
+    if (response.code === 200) {
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("profile", JSON.stringify(response.user));
+      setProfile(response.user);
+      setIsAuthenticated(true);
+      navigate("/feed");
+      enqueueSnackbar("Login Success", { variant: "success" });
     } else {
-      enqueueSnackbar(resp.message, { variant: "error" });
+      enqueueSnackbar(response.message, { variant: "error" });
     }
-    navigate("/");
+    setIsLoading(false);
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -74,6 +89,7 @@ export default function Login() {
           <Button
             type="submit"
             fullWidth
+            disabled={isLoading}
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >

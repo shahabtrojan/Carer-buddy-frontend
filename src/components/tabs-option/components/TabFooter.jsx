@@ -1,7 +1,7 @@
 import { Button, Stack } from "@mui/material";
 import React from "react";
 
-function TabFooter({ isDisabled, handleChangeDisableStatus }) {
+function TabFooter({ isDisabled, handleChangeDisableStatus, handleUpdate }) {
   return (
     <div className="col-12 p-2 d-flex justify-content-end">
       {isDisabled ? (
@@ -25,7 +25,7 @@ function TabFooter({ isDisabled, handleChangeDisableStatus }) {
 
           <Button
             className="text-capitalize"
-            onClick={() => handleChangeDisableStatus(false)}
+            onClick={handleUpdate}
             variant="contained"
             color="primary"
           >

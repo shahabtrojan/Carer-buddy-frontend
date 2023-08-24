@@ -3,8 +3,10 @@ import { Avatar, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../../../hooks/AppContext";
 
 function Profile() {
+  const { profile } = useAppContext();
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -19,7 +21,10 @@ function Profile() {
     <>
       <Tooltip title="Open settings" arrow placement="top">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <Avatar
+            alt={profile.first_name[0]}
+            src={profile.image ? profile.image : ""}
+          />
         </IconButton>
       </Tooltip>
       <Menu
@@ -79,6 +84,7 @@ function Profile() {
         <MenuItem
           className="menu__item"
           onClick={() => {
+            localStorage.clear();
             navigate("/auth/login");
           }}
         >

@@ -25,7 +25,6 @@ export const ReactGeoLocation = () => {
     watchLocationPermissionChange: true,
   });
 
-  console.log(coords, "positionError");
 
   return (
     <div className="p-4 m-4 bg-slate-100 rounded-sm max-w-md mx-auto bg-white drop-shadow-lg flex flex-col items-center space-x-4">

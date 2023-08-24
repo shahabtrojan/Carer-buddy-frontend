@@ -2,4 +2,10 @@
 
 .feed__wrapper {
   background-color: var(--background-color);
+  position: relative;
+}
+.card-header {
+  background-color: var(--primary-color-light);
+  margin-bottom: 5px;
+  color: black;
 }

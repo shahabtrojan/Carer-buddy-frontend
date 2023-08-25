@@ -6,7 +6,11 @@ import { useSnackbar } from "notistack";
 import { update_location } from "../../../dal/user";
 import { useGeolocated } from "react-geolocated";
 
-function SelectLocation({ isDisabled, handleChangeDisableStatus }) {
+function SelectLocation({
+  isDisabled,
+  handleChangeDisableStatus,
+  personProfile,
+}) {
   const { enqueueSnackbar } = useSnackbar();
   const {
     coords,
@@ -21,10 +25,10 @@ function SelectLocation({ isDisabled, handleChangeDisableStatus }) {
     userDecisionTimeout: 1000000,
     watchLocationPermissionChange: true,
   });
-  const { profile, setProfile } = useAppContext();
+  const { setProfile } = useAppContext();
   const [inputs, setInputs] = useState({
-    longitude: profile?.locations?.longitude || "",
-    latitude: profile?.locations?.latitude || "",
+    longitude: personProfile?.locations?.longitude || "",
+    latitude: personProfile?.locations?.latitude || "",
   });
 
   const handleUpdateLocation = async () => {
@@ -54,8 +58,8 @@ function SelectLocation({ isDisabled, handleChangeDisableStatus }) {
     return () => {
       handleChangeDisableStatus(true);
       setInputs({
-        longitude: profile?.locations?.longitude || "",
-        latitude: profile?.locations?.latitude || "",
+        longitude: personProfile?.locations?.longitude || "",
+        latitude: personProfile?.locations?.latitude || "",
       });
     };
   }, []);

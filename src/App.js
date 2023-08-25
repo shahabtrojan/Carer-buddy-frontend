@@ -18,6 +18,7 @@ function App() {
               <CloseIcon sx={{ color: "white" }} />
             </IconButton>
           )}
+          disableWindowBlurListener
           autoHideDuration={5000}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           maxSnack={4}

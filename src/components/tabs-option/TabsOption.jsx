@@ -10,6 +10,7 @@ import SelectDisease from "./components/SelectDisease";
 import SelectLocation from "./components/SelectLocation";
 import { CircularProgress, LinearProgress, Stack } from "@mui/material";
 import CustomProgressBar from "../custom-progressbar/CustomProgressBar";
+import { useParams } from "react-router-dom";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,7 +45,8 @@ function a11yProps(index) {
   };
 }
 
-export default function TabsOption() {
+export default function TabsOption({ personProfile }) {
+  const { id } = useParams();
   const [value, setValue] = React.useState(0);
   const [isDisabled, setIsDisabled] = React.useState(true);
   const handleChangeDisableStatus = (status = !isDisabled) => {
@@ -56,9 +58,18 @@ export default function TabsOption() {
 
   return (
     <Box sx={{ width: "100%", position: "relative" }}>
-      <Stack sx={{ position: "absolute", top: 5, right: 0 }}>
-        <CustomProgressBar />
-      </Stack>
+      {!id && (
+        <Stack
+          sx={{
+            display: { xs: "none", md: "auto" },
+            position: "absolute",
+            top: 5,
+            right: 0,
+          }}
+        >
+          <CustomProgressBar />
+        </Stack>
+      )}
       <Box
         sx={{
           borderBottom: 1,
@@ -83,24 +94,28 @@ export default function TabsOption() {
         <PersonalInformation
           isDisabled={isDisabled}
           handleChangeDisableStatus={handleChangeDisableStatus}
+          personProfile={personProfile}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <SelectInterest
           isDisabled={isDisabled}
           handleChangeDisableStatus={handleChangeDisableStatus}
+          personProfile={personProfile}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <SelectDisease
           isDisabled={isDisabled}
           handleChangeDisableStatus={handleChangeDisableStatus}
+          personProfile={personProfile}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         <SelectLocation
           isDisabled={isDisabled}
           handleChangeDisableStatus={handleChangeDisableStatus}
+          personProfile={personProfile}
         />
       </CustomTabPanel>
     </Box>

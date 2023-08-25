@@ -27,6 +27,7 @@ export const get_profile = () => {
     url: "users/profile",
     headers: {
       "Content-Type": "application/json",
+      "x-sh-auth": localStorage.getItem("token"),
     },
   };
   return invokeApi(requestObj);
@@ -87,6 +88,53 @@ export const user_feed = () => {
       "Content-Type": "application/json",
       "x-sh-auth": localStorage.getItem("token"),
     },
+  };
+  return invokeApi(requestObj);
+};
+export const get_requests = () => {
+  const requestObj = {
+    url: "users/get_requests",
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-sh-auth": localStorage.getItem("token"),
+    },
+  };
+  return invokeApi(requestObj);
+};
+export const get_profile_by_id = (id) => {
+  const requestObj = {
+    url: `users/get_profile_by_id/${id}`,
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-sh-auth": localStorage.getItem("token"),
+    },
+  };
+  return invokeApi(requestObj);
+};
+
+export const request_message = (id) => {
+  const requestObj = {
+    url: `users/request_message/${id}`,
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-sh-auth": localStorage.getItem("token"),
+    },
+  };
+  return invokeApi(requestObj);
+};
+
+export const accept_request = ({ id, payload }) => {
+  const requestObj = {
+    url: `users/accept_request/${id}`,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-sh-auth": localStorage.getItem("token"),
+    },
+    data: payload,
   };
   return invokeApi(requestObj);
 };

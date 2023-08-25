@@ -14,18 +14,27 @@ import TabFooter from "./TabFooter";
 import { useAppContext } from "../../../hooks/AppContext";
 import { update_personal_info } from "../../../dal/user";
 import { useSnackbar } from "notistack";
+import { useParams } from "react-router-dom";
 
-function PersonalInformation({ isDisabled, handleChangeDisableStatus }) {
+function PersonalInformation({
+  isDisabled,
+  handleChangeDisableStatus,
+  personProfile,
+}) {
+  const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-  const { profile, setProfile } = useAppContext();
+  const { setProfile, handleCheckProfileProgress, showPhone } = useAppContext();
   const [inputs, setInputs] = useState({
-    ...profile,
+    ...personProfile,
   });
   const handleUpdatePersonalInfo = async () => {
     const postData = {
+      ...personProfile,
       first_name: inputs.first_name,
       last_name: inputs.last_name,
+      contact_number: inputs.contact_number,
       gender: inputs.gender,
+      profile_completed: handleCheckProfileProgress() === 100 ? true : false,
     };
     const response = await update_personal_info(postData);
     if (response.code === 200) {
@@ -44,7 +53,7 @@ function PersonalInformation({ isDisabled, handleChangeDisableStatus }) {
   useEffect(() => {
     return () => {
       handleChangeDisableStatus(true);
-      setInputs({ ...profile });
+      setInputs({ ...personProfile });
     };
   }, []);
   return (
@@ -70,16 +79,35 @@ function PersonalInformation({ isDisabled, handleChangeDisableStatus }) {
             disabled={isDisabled}
           />
         </div>
-        <div className="col-md-6 p-2">
-          <TextField
-            sx={{ width: "100%" }}
-            name="email"
-            label="Email"
-            type="email"
-            value={inputs.email}
-            disabled={true}
-          />
-        </div>
+        {id ? (
+          showPhone ? (
+            <div className="col-md-6 p-2">
+              <TextField
+                sx={{ width: "100%" }}
+                name="contact_number"
+                label="Contact Number"
+                type="email"
+                value={inputs.contact_number}
+                onChange={handleChage}
+                disabled={isDisabled}
+              />
+            </div>
+          ) : (
+            ""
+          )
+        ) : (
+          <div className="col-md-6 p-2">
+            <TextField
+              sx={{ width: "100%" }}
+              name="contact_number"
+              label="Contact Number"
+              type="email"
+              value={inputs.contact_number}
+              onChange={handleChage}
+              disabled={isDisabled}
+            />
+          </div>
+        )}
         <div className="col-md-6 p-2">
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Gender</InputLabel>

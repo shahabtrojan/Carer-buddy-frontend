@@ -39,30 +39,10 @@ CircularProgressWithLabel.propTypes = {
 };
 
 export default function CustomProgressBar() {
-  const { profile, progress, setProgress } = useAppContext();
+  const { profile, progress, handleCheckProfileProgress } = useAppContext();
 
   React.useEffect(() => {
-    let value = 0;
-    if (profile.first_name) {
-      value += 8;
-    }
-    if (profile.last_name) {
-      value += 8;
-    }
-    if (profile.gender) {
-      value += 8;
-    }
-    if (profile.interests) {
-      value += profile.interests.length * 10;
-    }
-    if (profile.diseases) {
-      value += profile.diseases.length * 10;
-    }
-    if (profile.locations) {
-      if (profile.locations.longitude) value += 8;
-      if (profile.locations.latitude) value += 8;
-    }
-    setProgress(value);
+    handleCheckProfileProgress();
   }, [profile]);
 
   return <CircularProgressWithLabel value={progress} />;

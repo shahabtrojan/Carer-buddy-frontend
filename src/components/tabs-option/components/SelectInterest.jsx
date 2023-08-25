@@ -7,13 +7,17 @@ import { useAppContext } from "../../../hooks/AppContext";
 import { useSnackbar } from "notistack";
 import { update_interest } from "../../../dal/user";
 
-function SelectInterest({ isDisabled, handleChangeDisableStatus }) {
+function SelectInterest({
+  isDisabled,
+  handleChangeDisableStatus,
+  personProfile,
+}) {
   const { enqueueSnackbar } = useSnackbar();
-  const { profile, setProfile } = useAppContext();
+  const { setProfile } = useAppContext();
   const [interest, setInterest] = useState([
-    profile.interests[0] || "",
-    profile.interests[1] || "",
-    profile.interests[2] || "",
+    personProfile.interests[0] || "",
+    personProfile.interests[1] || "",
+    personProfile.interests[2] || "",
   ]);
 
   const handleUpdateInterest = async () => {
@@ -39,9 +43,9 @@ function SelectInterest({ isDisabled, handleChangeDisableStatus }) {
   useEffect(() => {
     return () => {
       setInterest([
-        profile.interests[0] || "",
-        profile.interests[1] || "",
-        profile.interests[2] || "",
+        personProfile.interests[0] || "",
+        personProfile.interests[1] || "",
+        personProfile.interests[2] || "",
       ]);
       handleChangeDisableStatus(true);
     };

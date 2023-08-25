@@ -109,7 +109,6 @@ function Topbar(props) {
                 flexGrow={1}
                 className="d-flex d-sm-none justify-content-end align-items-center"
               >
-                <Messages />
                 <Notifications />
                 <Profile />
               </Box>
@@ -134,8 +133,6 @@ function Topbar(props) {
               ))}
               {isAuthenticated && (
                 <>
-                  <Messages />
-
                   <Notifications />
 
                   <Profile />

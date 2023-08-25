@@ -2,19 +2,29 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../../hooks/AppContext";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { Badge, IconButton, Menu, MenuItem, Stack } from "@mui/material";
+import {
+  Badge,
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+  Typography,
+} from "@mui/material";
 import ChatPersonButton from "../../../pages/chat-page/components/ChatPersonButton";
+import { get_requests } from "../../../dal/user";
+import Loader from "../../loader/Loader";
 
 function Notifications() {
   const navigate = useNavigate();
-  const { notifications } = useAppContext();
+  const { notifications, handleGetNotifications } = useAppContext();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleOpenMenu = (event) => {
+  const handleOpenMenu = async (event) => {
     setAnchorEl(event.currentTarget);
+    handleGetNotifications();
   };
 
   return (
@@ -26,9 +36,9 @@ function Notifications() {
         color="inherit"
         onClick={handleOpenMenu}
       >
-        <Badge badgeContent={17} color="error">
-          <NotificationsIcon />
-        </Badge>
+        {/* <Badge badgeContent={notifications.length} color="error"> */}
+        <NotificationsIcon />
+        {/* </Badge> */}
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -65,13 +75,26 @@ function Notifications() {
         transformOrigin={{ horizontal: "center", vertical: "top" }}
         anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
       >
-        <Stack sx={{ width: 300, height: 400 }}>
-          <MenuItem sx={{ borderBottom: 1 }}>
-            <ChatPersonButton
-              disableborderBottom
-              handleChangeActiveChat={() => navigate("/chat")}
-            />
-          </MenuItem>
+        <Stack sx={{ width: 300, height: 400, position: "relative" }}>
+          {notifications === null ? (
+            <Loader />
+          ) : notifications.length == 0 ? (
+            <MenuItem
+              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+              disabled
+            >
+              <Typography style={{ textAlign: "center" }}>
+                No Notifications
+              </Typography>
+            </MenuItem>
+          ) : (
+            <MenuItem sx={{ borderBottom: 1 }}>
+              <ChatPersonButton
+                disableborderBottom
+                handleChangeActiveChat={() => navigate("/chat")}
+              />
+            </MenuItem>
+          )}
         </Stack>
       </Menu>
     </>

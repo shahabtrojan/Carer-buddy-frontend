@@ -1,18 +1,34 @@
 import React, { useRef, useState } from "react";
 import EditProfileDataButton from "./EditProfileDataButton";
 import { useAppContext } from "../../../hooks/AppContext";
-import { update_personal_info } from "../../../dal/user";
+import {
+  accept_request,
+  request_message,
+  update_personal_info,
+} from "../../../dal/user";
 import { useSnackbar } from "notistack";
 import { defaultImg } from "../../../utils/constant";
+import { useParams } from "react-router-dom";
+import { Button } from "@mui/material";
 
-function ProfileCover() {
+function ProfileCover({ personProfile }) {
+  const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-  const { profile, setProfile } = useAppContext(0);
+  const {
+    profile,
+    setProfile,
+    handleCheckProfileProgress,
+    myRequestedUsers,
+    fetchProfile,
+
+    setShowPhone,
+  } = useAppContext();
   const profileRef = useRef(null);
   const [profileImgPreview, setProfileImgPreview] = useState(
-    profile.image || defaultImg
+    personProfile.image || defaultImg
   );
   const [profileImg, setProfileImg] = useState(null);
+  const [friendStatus, setFriendStatus] = useState("");
   const handleChangeImage = (e) => {
     if (e.target.files.length > 0) {
       setProfileImg(e.target.files[0]);
@@ -27,7 +43,11 @@ function ProfileCover() {
     const reader = new FileReader();
     reader.readAsDataURL(profileImg);
     reader.onload = async () => {
-      const payload = { ...profile, image: reader.result };
+      const payload = {
+        ...profile,
+        image: reader.result,
+        profile_completed: handleCheckProfileProgress() === 100 ? true : false,
+      };
       const response = await update_personal_info(payload);
       if (response.code === 200) {
         localStorage.setItem("profile", JSON.stringify(payload));
@@ -42,6 +62,93 @@ function ProfileCover() {
       console.log("Error: ", error);
     };
   };
+  const handleSendRequest = async () => {
+    const response = await request_message(id);
+    if (response.code === 200) {
+      enqueueSnackbar("Request Sent.", { variant: "success" });
+      fetchProfile();
+    } else {
+      enqueueSnackbar(response.message, { variant: "error" });
+    }
+  };
+  const handleAcceptRequest = async () => {
+    const response = await accept_request({
+      id,
+      payload: { status: "accepted" },
+    });
+    if (response.code == 200) {
+      enqueueSnackbar("Request Accepted", { variant: "success" });
+      fetchProfile();
+    }
+  };
+  const checkIncomingRequests = () => {
+    let status = 0;
+    if (profile && profile.message_request.length > 0) {
+      profile.message_request.map((request) => {
+        if (id == request.requested_by._id) {
+          status = 1;
+          if (request.requested_status == "accepted") {
+            status = 2;
+            setShowPhone(true);
+          }
+        }
+      });
+    }
+    return status;
+  };
+  const checkSendRequests = () => {
+    let status = 0;
+    if (myRequestedUsers && myRequestedUsers.length > 0) {
+      myRequestedUsers.map((request) => {
+        if (id == request._id) {
+          status = 1;
+          request.message_request.map((checkStatus) => {
+            if (
+              checkStatus.requested_status === "accepted" &&
+              checkStatus.requested_by == profile._id
+            ) {
+              status = 2;
+              setShowPhone(true);
+            }
+          });
+        }
+      });
+    }
+    return status;
+  };
+  const getButton = () => {
+    let status = checkIncomingRequests();
+    if (status == 1) {
+      return (
+        <Button
+          variant="outlined"
+          sx={{ color: "black", fontSize: 8 }}
+          onClick={handleAcceptRequest}
+        >
+          Accept Request
+        </Button>
+      );
+    }
+    if (status == 2) return;
+    status = checkSendRequests();
+    if (status == 1) {
+      return (
+        <Button variant="outlined" sx={{ color: "black", fontSize: 8 }}>
+          Request Sent
+        </Button>
+      );
+    }
+    if (status == 2) return;
+    return (
+      <Button
+        variant="outlined"
+        sx={{ color: "black", fontSize: 8 }}
+        onClick={handleSendRequest}
+      >
+        Send Request
+      </Button>
+    );
+  };
   return (
     <div className="col-12 cover__photo__wrapper">
       {/* <img
@@ -53,6 +160,9 @@ function ProfileCover() {
         <div>
           <img
             onClick={() => {
+              if (id) {
+                return;
+              }
               profileRef.current.click();
             }}
             className="profile__image"
@@ -68,7 +178,8 @@ function ProfileCover() {
           />
         </div>
         <div className="profile__name_wrapper">
-          <h4 className="profile__name">{`${profile.first_name} ${profile.last_name}`}</h4>
+          <h4 className="profile__name">{`${personProfile.first_name} ${personProfile.last_name}`}</h4>
+          {id && <>{friendStatus ? friendStatus : getButton()}</>}
           {profileImg && (
             <EditProfileDataButton
               handleCancel={handleCancel}

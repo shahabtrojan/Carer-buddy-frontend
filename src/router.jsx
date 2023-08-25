@@ -42,6 +42,7 @@ function AppRoutes() {
           <Route path="/" element={<Topbar />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/" element={<PrivateRouteAuthentication />}>
+              <Route path="/profile/:id" element={<ProfilePage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/chat" element={<ChatPage />} />
               <Route path="/feed" element={<FeedPage />} />

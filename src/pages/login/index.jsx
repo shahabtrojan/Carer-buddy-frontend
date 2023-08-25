@@ -29,8 +29,9 @@ export default function Login() {
     const response = await login_user(postData);
     if (response.code === 200) {
       localStorage.setItem("token", response.token);
+
       localStorage.setItem("profile", JSON.stringify(response.user));
-      setProfile(response.user);
+      setProfile({ ...response.user });
       setIsAuthenticated(true);
       navigate("/feed");
       enqueueSnackbar("Login Success", { variant: "success" });

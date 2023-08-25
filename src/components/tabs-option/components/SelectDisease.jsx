@@ -7,13 +7,13 @@ import { update_disease } from "../../../dal/user";
 import { useSnackbar } from "notistack";
 import { useAppContext } from "../../../hooks/AppContext";
 
-function SelectDisease({ isDisabled, handleChangeDisableStatus }) {
+function SelectDisease({ isDisabled, handleChangeDisableStatus,personProfile }) {
   const { enqueueSnackbar } = useSnackbar();
   const { profile, setProfile } = useAppContext();
   const [diseases, setDiseases] = useState([
-    profile.diseases[0] || "",
-    profile.diseases[1] || "",
-    profile.diseases[2] || "",
+    personProfile.diseases[0] || "",
+    personProfile.diseases[1] || "",
+    personProfile.diseases[2] || "",
   ]);
 
   const handleUpdateDiseases = async () => {
@@ -39,9 +39,9 @@ function SelectDisease({ isDisabled, handleChangeDisableStatus }) {
   useEffect(() => {
     return () => {
       setDiseases([
-        profile.diseases[0] || "",
-        profile.diseases[1] || "",
-        profile.diseases[2] || "",
+        personProfile.diseases[0] || "",
+        personProfile.diseases[1] || "",
+        personProfile.diseases[2] || "",
       ]);
       handleChangeDisableStatus(true);
     };

@@ -9,7 +9,7 @@ function EditProfileDataButton({ className, handleUpdate, handleCancel }) {
           className="text-capitalize"
           size="small"
           variant="outlined"
-          sx={{ minWidth: 100 }}
+          // sx={{ minWidth: 10 }}
           onClick={handleCancel}
         >
           Cancel
@@ -18,7 +18,7 @@ function EditProfileDataButton({ className, handleUpdate, handleCancel }) {
           className="text-capitalize"
           size="small"
           variant="contained"
-          sx={{ minWidth: 100 }}
+          // sx={{ minWidth: 100 }}
           onClick={handleUpdate}
         >
           Update

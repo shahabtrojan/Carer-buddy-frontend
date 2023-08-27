@@ -34,7 +34,13 @@ export const AppContextProvider = ({ children }) => {
     const response = await user_feed();
     if (response.code === 200) {
       if (response.cluster_users) {
-        setUsersFeed([...response.cluster_users]);
+        let usersList = [];
+        response.cluster_users.map((user) => {
+          if (user._id !== profile._id) {
+            usersList.push(user);
+          }
+        });
+        setUsersFeed([...usersList]);
       } else {
         setUsersFeed([...response.users]);
       }

@@ -55,7 +55,7 @@ function ProfileCover({ personProfile }) {
         setProfileImg(null);
         enqueueSnackbar(response.message, { variant: "success" });
       } else {
-        enqueueSnackbar(response.message, { variant: "error" });
+        enqueueSnackbar("Upload small size Image", { variant: "error" });
       }
     };
     reader.onerror = function (error) {

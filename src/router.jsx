@@ -15,6 +15,7 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import InterestSelect from "./components/interest-select/InterestSelect";
 import ChatPage from "./pages/chat-page/ChatPage";
 import FeedPage from "./pages/feed/FeedPage";
+import PrivacyPolicy from "./pages/privacy-policy/PrivacyPolicy";
 
 const PublicRouteAuthentication = () => {
   if (localStorage.getItem("token")) {
@@ -34,13 +35,14 @@ function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/">
+        <Route path="/" element={<Topbar />}>
           <Route path="/auth" element={<PublicRouteAuthentication />}>
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
           </Route>
-          <Route path="/" element={<Topbar />}>
+          <Route path="/">
             <Route path="/" element={<HomePage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/" element={<PrivateRouteAuthentication />}>
               <Route path="/profile/:id" element={<ProfilePage />} />
               <Route path="/profile" element={<ProfilePage />} />

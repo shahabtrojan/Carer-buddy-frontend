@@ -43,7 +43,7 @@ export default function SignUp() {
       component="main"
       maxWidth="xs"
       sx={{
-        minHeight: "100vh",
+        minHeight: "87vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

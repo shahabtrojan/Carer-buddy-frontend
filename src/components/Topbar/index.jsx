@@ -16,18 +16,18 @@ import Button from "@mui/material/Button";
 import { Outlet, useNavigate } from "react-router-dom";
 import Profile from "./components/Profile";
 import Notifications from "./components/Notifications";
-import Messages from "./components/Messages";
-import MenuPopup from "../menu-popup/MenuPopup";
 import { useAppContext } from "../../hooks/AppContext";
 
 const drawerWidth = 200;
 const authenticatedLinks = [
   { label: "Home", value: "/" },
   { label: "Feed", value: "/feed" },
+  { label: "Privacy Policy", value: "/privacy-policy" },
   // { label: "Contact", value: "/contact" },
 ];
 const unAuthenticatedLinks = [
   { label: "Home", value: "/" },
+  { label: "Privacy Policy", value: "/privacy-policy" },
   { label: "Login", value: "/auth/login" },
   { label: "Signup", value: "/auth/signup" },
 ];

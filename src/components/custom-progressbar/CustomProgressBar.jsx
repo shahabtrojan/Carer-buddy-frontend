@@ -44,6 +44,8 @@ export default function CustomProgressBar() {
 
   React.useEffect(() => {
     handleCheckProfileProgress();
+    if (progress == 100) {
+    }
   }, [profile]);
 
   return <CircularProgressWithLabel value={progress} />;

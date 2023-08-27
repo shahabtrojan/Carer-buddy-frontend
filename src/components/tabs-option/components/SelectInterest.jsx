@@ -23,6 +23,7 @@ function SelectInterest({
   const handleUpdateInterest = async () => {
     const postData = {
       interests: [...interest],
+      profile_completed: true,
     };
     const response = await update_interest(postData);
     if (response.code === 200) {

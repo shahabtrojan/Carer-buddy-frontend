@@ -2,9 +2,29 @@
   height: 100vh;
   object-fit: cover;
 }
-.carousel__btn{
+.carousel__btn {
   opacity: 0.7;
 }
-.carousel__btn:hover{
+.carousel__btn:hover {
   opacity: 1;
+}
+.image__text {
+  font-size: 2.5rem;
+  /* font-size: 10px; */
+}
+
+/* small screen */
+@media only screen and (min-width: 0px) and (max-width: 576px) {
+  .image__text {
+    font-size: 1.2rem;
+    /* font-size: 10px; */
+  }
+}
+
+/* medium screen */
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+  .image__text {
+    font-size: 2rem;
+    /* font-size: 10px; */
+  }
 }

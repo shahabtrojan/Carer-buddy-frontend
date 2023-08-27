@@ -33,7 +33,11 @@ export const AppContextProvider = ({ children }) => {
   const fetchFeed = async () => {
     const response = await user_feed();
     if (response.code === 200) {
-      setUsersFeed([...response.users]);
+      if (response.cluster_users) {
+        setUsersFeed([...response.cluster_users]);
+      } else {
+        setUsersFeed([...response.users]);
+      }
     }
   };
   const fetchProfile = async () => {

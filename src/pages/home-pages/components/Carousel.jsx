@@ -83,10 +83,10 @@ function Carousel() {
             padding: 10,
             lineHeight: 1.8,
             color: "white",
-            fontSize: "2.5rem",
             backgroundColor: "#28397a",
             opacity: 0.8,
           }}
+          className="image__text"
         >
           {imageList[selectedIndex].label}
         </h1>

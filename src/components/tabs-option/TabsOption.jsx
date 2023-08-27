@@ -8,9 +8,10 @@ import PersonalInformation from "./components/PersonalInformation";
 import SelectInterest from "./components/SelectInterest";
 import SelectDisease from "./components/SelectDisease";
 import SelectLocation from "./components/SelectLocation";
-import { CircularProgress, LinearProgress, Stack } from "@mui/material";
+import { Button, CircularProgress, LinearProgress, Stack } from "@mui/material";
 import CustomProgressBar from "../custom-progressbar/CustomProgressBar";
 import { useParams } from "react-router-dom";
+import { useAppContext } from "../../hooks/AppContext";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,6 +48,7 @@ function a11yProps(index) {
 
 export default function TabsOption({ personProfile }) {
   const { id } = useParams();
+  const { progress } = useAppContext();
   const [value, setValue] = React.useState(0);
   const [isDisabled, setIsDisabled] = React.useState(true);
   const handleChangeDisableStatus = (status = !isDisabled) => {
@@ -58,18 +60,16 @@ export default function TabsOption({ personProfile }) {
 
   return (
     <Box sx={{ width: "100%", position: "relative" }}>
-      {!id && (
-        <Stack
-          sx={{
-            display: { xs: "none", md: "auto" },
-            position: "absolute",
-            top: 5,
-            right: 0,
-          }}
-        >
-          <CustomProgressBar />
-        </Stack>
-      )}
+      <Stack
+        sx={{
+          position: "absolute",
+          top: -35,
+          right: 0,
+        }}
+      >
+        <CustomProgressBar />
+      </Stack>
+
       <Box
         sx={{
           borderBottom: 1,

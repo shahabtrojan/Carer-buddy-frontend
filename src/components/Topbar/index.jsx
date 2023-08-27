@@ -57,8 +57,8 @@ function Topbar(props) {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-  const handleNavigate = (e) => {
-    navigate(e.target.id);
+  const handleNavigate = (value) => {
+    navigate(value);
   };
 
   const drawer = (
@@ -72,7 +72,7 @@ function Topbar(props) {
           <ListItem
             selected={checkSelected(item.value)}
             className="menu__wrapper"
-            onClick={handleNavigate}
+            onClick={() => handleNavigate(item.value)}
             id={item.value}
             key={item.value}
             disablePadding
@@ -124,7 +124,7 @@ function Topbar(props) {
               {navItems.map((item) => (
                 <Button
                   sx={{ color: checkSelected(item.value) ? "black" : "white" }}
-                  onClick={handleNavigate}
+                  onClick={() => handleNavigate(item.value)}
                   key={item.value}
                   id={item.value}
                 >

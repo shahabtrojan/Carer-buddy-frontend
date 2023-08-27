@@ -7,7 +7,11 @@ import { update_disease } from "../../../dal/user";
 import { useSnackbar } from "notistack";
 import { useAppContext } from "../../../hooks/AppContext";
 
-function SelectDisease({ isDisabled, handleChangeDisableStatus,personProfile }) {
+function SelectDisease({
+  isDisabled,
+  handleChangeDisableStatus,
+  personProfile,
+}) {
   const { enqueueSnackbar } = useSnackbar();
   const { profile, setProfile } = useAppContext();
   const [diseases, setDiseases] = useState([
@@ -49,13 +53,13 @@ function SelectDisease({ isDisabled, handleChangeDisableStatus,personProfile }) 
   return (
     <Box sx={{ width: "100%" }}>
       <div className="row">
-        {commonDiseases.map((single_diseases, index) => (
+        {diseases.map((single_diseases, index) => (
           <MuiSelect
             label={`Disease ${index + 1}`}
             value={single_diseases}
             handleChange={(e) => handleChange(e, index)}
             isDisabled={isDisabled}
-            optionList={interestList}
+            optionList={commonDiseases}
           />
         ))}
         <TabFooter

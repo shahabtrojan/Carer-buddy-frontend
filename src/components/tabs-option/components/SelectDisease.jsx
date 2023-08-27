@@ -1,6 +1,6 @@
 import { Box, Button, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { interestList } from "../../../utils/constant";
+import { commonDiseases, interestList } from "../../../utils/constant";
 import MuiSelect from "./MuiSelect";
 import TabFooter from "./TabFooter";
 import { update_disease } from "../../../dal/user";
@@ -49,7 +49,7 @@ function SelectDisease({ isDisabled, handleChangeDisableStatus,personProfile }) 
   return (
     <Box sx={{ width: "100%" }}>
       <div className="row">
-        {diseases.map((single_diseases, index) => (
+        {commonDiseases.map((single_diseases, index) => (
           <MuiSelect
             label={`Disease ${index + 1}`}
             value={single_diseases}

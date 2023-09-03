@@ -80,14 +80,15 @@ export const update_location = (payload) => {
   };
   return invokeApi(requestObj);
 };
-export const user_feed = () => {
+export const user_feed = (payload) => {
   const requestObj = {
-    method: "GET",
+    method: "POST",
     url: "users/feed",
     headers: {
       "Content-Type": "application/json",
       "x-sh-auth": localStorage.getItem("token"),
     },
+    data: payload,
   };
   return invokeApi(requestObj);
 };

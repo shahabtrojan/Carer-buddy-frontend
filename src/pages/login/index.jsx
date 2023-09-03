@@ -27,6 +27,7 @@ export default function Login() {
       password: data.get("password"),
     };
     const response = await login_user(postData);
+    console.log(response, "djsalkslk");
     if (response.code === 200) {
       localStorage.setItem("token", response.token);
 
@@ -36,7 +37,10 @@ export default function Login() {
       navigate("/feed");
       enqueueSnackbar("Login Success", { variant: "success" });
     } else {
-      enqueueSnackbar(response.message, { variant: "error" });
+      enqueueSnackbar(
+        response?.response?.data?.message || "Somthing Went Wrong",
+        { variant: "error" }
+      );
     }
     setIsLoading(false);
   };

@@ -31,7 +31,10 @@ export const AppContextProvider = ({ children }) => {
   }, [profile]);
 
   const fetchFeed = async () => {
-    const response = await user_feed();
+    const payload = {
+      ...profile.locations,
+    };
+    const response = await user_feed(payload);
     if (response.code === 200) {
       if (response.cluster_users) {
         let usersList = [];

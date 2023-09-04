@@ -31,12 +31,12 @@ function PersonalInformation({
       last_name: inputs.last_name,
       contact_number: inputs.contact_number,
       gender: inputs.gender,
+      home_address: inputs.home_address,
       profile_completed: handleCheckProfileProgress() === 100 ? true : false,
     };
     const response = await update_personal_info(postData);
     if (response.code === 200) {
       setProfile(response.user);
-      console.log(response, "sakldsadsadsa");
       localStorage.setItem("profile", JSON.stringify(response.user));
       handleChangeDisableStatus(true);
       enqueueSnackbar(response.message, { variant: "success" });
@@ -122,6 +122,18 @@ function PersonalInformation({
               <MenuItem value="other">Other</MenuItem>
             </Select>
           </FormControl>
+        </div>
+        <div className="col-12 p-2">
+          <TextField
+            sx={{ width: "100%" }}
+            name="home_address"
+            label="Address"
+            value={inputs.home_address}
+            onChange={handleChage}
+            multiline
+            rows={4}
+            disabled={isDisabled}
+          />
         </div>
         <TabFooter
           isDisabled={isDisabled}

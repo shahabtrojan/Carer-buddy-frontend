@@ -26,6 +26,7 @@ export default function SignUp() {
       first_name: data.get("first_name"),
       last_name: data.get("last_name"),
       email: data.get("email"),
+      home_address: data.get("home_address"),
       password: data.get("password"),
     };
     const response = await signup_user(postData);
@@ -104,6 +105,17 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="Address"
+                label="Address"
+                name="home_address"
+                multiline
+                rows={4}
               />
             </Grid>
           </Grid>

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../../hooks/AppContext";
 
 function Profile() {
-  const { profile } = useAppContext();
+  const { profile, setIsAuthenticated } = useAppContext();
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -84,6 +84,7 @@ function Profile() {
         <MenuItem
           className="menu__item"
           onClick={() => {
+            setIsAuthenticated(false);
             localStorage.clear();
             navigate("/auth/login");
           }}

@@ -23,6 +23,14 @@ export const invokeApi = async ({
       return response.data;
     }
   } catch (error) {
-    return error.response.data;
+    let errorObject = error.response.data;
+    if (errorObject) {
+      return errorObject;
+    } else {
+      return {
+        code: 400,
+        message: "Somthing Went Wrong. Please Check Your Server",
+      };
+    }
   }
 };

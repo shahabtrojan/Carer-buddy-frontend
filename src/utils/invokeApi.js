@@ -23,6 +23,6 @@ export const invokeApi = async ({
       return response.data;
     }
   } catch (error) {
-    return error;
+    return error.response.data;
   }
 };

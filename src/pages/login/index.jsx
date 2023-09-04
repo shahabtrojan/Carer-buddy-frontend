@@ -37,10 +37,9 @@ export default function Login() {
       navigate("/feed");
       enqueueSnackbar("Login Success", { variant: "success" });
     } else {
-      enqueueSnackbar(
-        response?.response?.data?.message || "Somthing Went Wrong",
-        { variant: "error" }
-      );
+      enqueueSnackbar(response.message || "Somthing Went Wrong", {
+        variant: "error",
+      });
     }
     setIsLoading(false);
   };

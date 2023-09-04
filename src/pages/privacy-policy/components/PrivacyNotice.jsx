@@ -7,31 +7,40 @@ function PrivacyNotice() {
       <div className="container" style={{ minHeight: "70vh" }}>
         <div className="row mt-5 d-flex justify-content-between">
           <div className="col-12">
-            <h2>
-              ProfessionaPrivacy notice: Carers’ Support East Kent (CSEK)ls
-            </h2>
+            <h2>Privacy Notice</h2>
             <p style={{ marginBottom: 25, fontSize: 20 }}>
-              This Privacy Notice explains when and why we collect personal
-              information about you, how we use it and the conditions under
-              which we may disclose it to others. Your personal data is defined
-              as any information that can directly or indirectly identify you.
-              This notice also explains how we keep your data safe and secure
-              and includes information you need to know about your rights and
-              how to exercise them.
-            </p>
-            <p style={{ marginBottom: 25, fontSize: 20 }}>
-              This is our privacy statement explains how we process employee,
-              beneficiary, volunteer, fundraising, supporter information, if you
-              would like more information about our privacy promises please see
-              our Privacy Policy (coming soon) for more information.
-            </p>
-            <p style={{ marginBottom: 25, fontSize: 20 }}>
-              If you have any questions regarding our Privacy Notice and our use
-              of your personal data or would like to exercise any of your
-              rights, please get in touch via the following information:
+              This explains when and why we collect personal information about
+              you, how we use it and the conditions under which we may disclose
+              it to others. Your personal data is defined as any information
+              that can directly or indirectly identify you. This notice also
+              explains how we keep your data safe and secure and includes
+              information you need to know about your rights and how to exercise
+              them. A copy of our privacy notice can be viewed here:
+              <Link to="https://carersek.org.uk/about-2/policies/privacy-policy/">
+                https://carersek.org.uk/about-2/policies/privacy-policy/
+              </Link>
             </p>
 
             <p style={{ marginBottom: 25, fontSize: 20 }}>
+              Ts & Cs On the CSEK app, the privacy of our users is of great
+              importance to us. These terms and conditions in conjunction with
+              our privacy notice have been compiled to better serve those who
+              are concerned with how their Personally identifiable information
+              (PII) is being used online.
+            </p>
+            <p style={{ marginBottom: 25, fontSize: 20 }}>
+              PII is information that can be used on its own or with other
+              information to identify, contact, or locate a single person, or to
+              identify an individual in context. Please read our privacy notice
+              (
+              <Link to="https://carersek.org.uk/about-2/policies/privacy-policy/">
+                https://carersek.org.uk/about-2/policies/privacy-policy/
+              </Link>
+              ) carefully to get a clear understanding of how we collect, use,
+              protect or otherwise handle your Personally Identifiable
+              Information in accordance with our app.
+            </p>
+            {/* <p style={{ marginBottom: 25, fontSize: 20 }}>
               <strong>Email us:</strong>{" "}
               <Link
                 style={{
@@ -85,7 +94,7 @@ function PrivacyNotice() {
               If you are based outside of the UK, the complaint should be
               directed to the relevant Data Protection Supervisory Authority in
               that Country.
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

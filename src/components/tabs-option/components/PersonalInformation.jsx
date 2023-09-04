@@ -39,6 +39,7 @@ function PersonalInformation({
     const response = await update_personal_info(postData);
     if (response.code === 200) {
       setProfile(response.user);
+      console.log(response, "sakldsadsadsa");
       localStorage.setItem("profile", JSON.stringify(response.user));
       handleChangeDisableStatus(true);
       enqueueSnackbar(response.message, { variant: "success" });
@@ -119,8 +120,8 @@ function PersonalInformation({
               onChange={(e) => handleChage(e, "gender")}
               disabled={isDisabled}
             >
-              <MenuItem value="male">Male</MenuItem>
-              <MenuItem value="female">Female</MenuItem>
+              <MenuItem value="m">Male</MenuItem>
+              <MenuItem value="f">Female</MenuItem>
               <MenuItem value="other">Other</MenuItem>
             </Select>
           </FormControl>

@@ -8,12 +8,13 @@ import Accordion6 from "./Accordion6";
 import Accordion7 from "./Accordion7";
 import Accordion8 from "./Accordion8";
 import Accordion10 from "./Accordion10";
+import BasicAccordionWithQuestion from "./BasicAccordionWithQuestion";
 
 function AccordionList() {
   return (
     <div style={{ backgroundColor: "#d6f3fc" }}>
       <div className="container pt-3 accordions">
-        <BasicAccordion
+        {/* <BasicAccordion
           title="1. Who we are?"
           bodyList={[
             "We are Carers’ Support East Kent and for the purposes of UK Data Protection Law we are registered as a Data Controller under registration number Z2453970. Carers Support East Kent offers a wide range of support services to provide Carers with the information and support they need.",
@@ -62,6 +63,22 @@ function AccordionList() {
           bodyList={[
             "We keep this policy under regular review. This notice was last updated September 2022.",
           ]}
+        /> */}
+        <BasicAccordionWithQuestion
+          title="1) What personal information do we collect from the people that visit our app?"
+          body="When registering on our app, as appropriate, you may be asked to enter your Name, Age, Location,  or other details to help you with your experience."
+        />
+        <BasicAccordionWithQuestion
+          title="2)When do we collect information?"
+          body="We collect information from you when you register on our app."
+        />
+        <BasicAccordionWithQuestion
+          title="3)How do we use your information?"
+          body="We use the information to help you match with the right person."
+        />
+        <BasicAccordionWithQuestion
+          title="4)How do we protect visitor information?"
+          body="We do not use vulnerability scanning and/or scanning to Payment Card Industry standards."
         />
         <div className="mb-5 pb-3" />
 

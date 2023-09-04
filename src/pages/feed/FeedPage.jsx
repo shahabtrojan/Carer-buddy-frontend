@@ -23,9 +23,8 @@ function FeedPage() {
         <div className="row">
           <div className="col-md-3" />
           <div className="col-md-6">
-            {usersFeed.map((user) => (
-              <PersonFeedCard user={user} />
-            ))}
+            {usersFeed.length > 0 &&
+              usersFeed.map((user) => <PersonFeedCard user={user} />)}
           </div>
           <div className="col-md-3" />
         </div>

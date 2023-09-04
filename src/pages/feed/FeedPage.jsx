@@ -33,7 +33,7 @@ function FeedPage() {
                   </Box>
                 </>
               ))}
-            {usersFeed.length == 0 && (
+            {usersFeed.length === 0 && (
               <div
                 className="d-flex justify-content-center align-items-center text-center"
                 style={{ height: "calc(100vh - 65px)" }}

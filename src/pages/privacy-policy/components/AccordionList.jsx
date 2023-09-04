@@ -1,13 +1,13 @@
 import React from "react";
-import BasicAccordion from "./Accordion";
-import Accordion2 from "./Accordion2";
-import Accordion3 from "./Accordion3";
-import Accordion4 from "./Accordion4";
+// import BasicAccordion from "./Accordion";
+// import Accordion2 from "./Accordion2";
+// import Accordion3 from "./Accordion3";
+// import Accordion4 from "./Accordion4";
+// import Accordion6 from "./Accordion6";
+// import Accordion7 from "./Accordion7";
+// import Accordion8 from "./Accordion8";
+// import Accordion10 from "./Accordion10";
 import InfoGraphicBoxes from "../../home-pages/components/InfoGraphicBoxes";
-import Accordion6 from "./Accordion6";
-import Accordion7 from "./Accordion7";
-import Accordion8 from "./Accordion8";
-import Accordion10 from "./Accordion10";
 import BasicAccordionWithQuestion from "./BasicAccordionWithQuestion";
 
 function AccordionList() {

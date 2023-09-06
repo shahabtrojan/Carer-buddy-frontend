@@ -30,6 +30,21 @@ export const AppContextProvider = ({ children }) => {
     handleGetNotifications();
   }, [profile]);
 
+  const checkValidUser = () => {
+    if (!profile) return false;
+    try {
+      if (profile.gender === "male") return false;
+      if (profile.gender.length > 0) return true;
+      if (profile.status > 0) return true;
+      if (profile.interests && profile.interests.length > 0) return true;
+      if (profile.diseases && profile.diseases.length > 0) return true;
+      if (profile.latitude && profile.latitude.length > 0) return true;
+      if (profile.longitude && profile.longitude.length > 0) return true;
+    } catch (error) {
+      return false;
+    }
+    return false;
+  };
   const fetchFeed = async () => {
     const payload = {
       ...profile.locations,
@@ -38,11 +53,14 @@ export const AppContextProvider = ({ children }) => {
     if (response.code === 200) {
       if (response.cluster_users) {
         let usersList = [];
-        response.cluster_users.map((user) => {
-          if (user._id !== profile._id) {
-            usersList.push(user);
-          }
-        });
+        if (checkValidUser()) {
+          response.cluster_users.map((user) => {
+            if (user._id !== profile._id) {
+              usersList.push(user);
+            }
+          });
+        }
+
         setUsersFeed([...usersList]);
       }
     }

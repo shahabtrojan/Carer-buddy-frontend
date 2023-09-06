@@ -44,8 +44,6 @@ export const AppContextProvider = ({ children }) => {
           }
         });
         setUsersFeed([...usersList]);
-      } else {
-        setUsersFeed([...response.users]);
       }
     }
   };

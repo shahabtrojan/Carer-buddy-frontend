@@ -32,6 +32,7 @@ function PersonalInformation({
       contact_number: inputs.contact_number,
       gender: inputs.gender,
       home_address: inputs.home_address,
+      status: inputs.status,
       profile_completed: handleCheckProfileProgress() === 100 ? true : false,
     };
     const response = await update_personal_info(postData);
@@ -54,6 +55,7 @@ function PersonalInformation({
       setInputs({ ...personProfile });
     };
   }, []);
+  console.log(inputs, "inputs");
   return (
     <Box sx={{ width: "100%" }}>
       <div className="row">
@@ -123,6 +125,27 @@ function PersonalInformation({
             </Select>
           </FormControl>
         </div>
+        <div className="col-md-6 p-2">
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-label">Status</InputLabel>
+            <Select
+              labelId="demo-simple-label"
+              id="demo-simple-select-1"
+              name="status"
+              label="Status"
+              value={inputs.status}
+              onChange={(e) => handleChage(e, "status")}
+              disabled={isDisabled}
+            >
+              <MenuItem value="single">Single</MenuItem>
+              <MenuItem value="married">Married</MenuItem>
+              <MenuItem value="divorced">Divorced</MenuItem>
+              <MenuItem value="widowed">Widowed</MenuItem>
+              <MenuItem value="separated">Separated</MenuItem>
+              <MenuItem value="complicated">Complicated</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
         <div className="col-12 p-2">
           <TextField
             sx={{ width: "100%" }}
@@ -135,6 +158,7 @@ function PersonalInformation({
             disabled={isDisabled}
           />
         </div>
+
         <TabFooter
           isDisabled={isDisabled}
           handleChangeDisableStatus={handleChangeDisableStatus}

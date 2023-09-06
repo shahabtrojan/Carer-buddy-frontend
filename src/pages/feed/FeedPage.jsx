@@ -23,17 +23,16 @@ function FeedPage() {
         <div className="row">
           <div className="col-md-3" />
           <div className="col-md-6">
-            {usersFeed.length > 0 &&
-              usersFeed.map((user) => (
-                <>
+            {usersFeed.length > 0 ? (
+              <>
+                {usersFeed.map((user) => (
                   <PersonFeedCard user={user} />
-
-                  <Box sx={{ width: "100%" }}>
-                    <Typography className="text-center">List End</Typography>
-                  </Box>
-                </>
-              ))}
-            {usersFeed.length === 0 && (
+                ))}
+                <Box sx={{ width: "100%" }}>
+                  <Typography className="text-center">List End</Typography>
+                </Box>
+              </>
+            ) : (
               <div
                 className="d-flex justify-content-center align-items-center text-center"
                 style={{ height: "calc(100vh - 65px)" }}

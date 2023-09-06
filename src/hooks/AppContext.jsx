@@ -46,16 +46,70 @@ export const AppContextProvider = ({ children }) => {
     }
     return status;
   };
+  const filterUser = (data) => {
+    // same gender
+    const sameGenderData = data.filter(
+      (user) => profile?.gender?.length && user.gender === profile.gender
+    );
+    // same status
+    const sameStatusData = data.filter(
+      (user) => profile?.status?.length > 0 && user.status === profile.status
+    );
+
+    // same interest
+    const sameInterestData = [];
+    if (profile.interests.length > 0) {
+      data.map((user) => {
+        profile.interests.map((myInterest) => {
+          if (myInterest.length > 0 && user.interests.includes(myInterest)) {
+            sameInterestData.push(user);
+          }
+        });
+      });
+    }
+    // same disease
+    const sameDiseaseData = [];
+    if (profile.interests.length > 0) {
+      data.map((user) => {
+        profile.diseases.map((myDisease) => {
+          if (myDisease.length > 0 && user.diseases.includes(myDisease)) {
+            sameDiseaseData.push(user);
+          }
+        });
+      });
+    }
+    // all similarities
+    const allFiltersData = [
+      ...sameGenderData,
+      ...sameStatusData,
+      ...sameInterestData,
+      ...sameDiseaseData,
+    ];
+    // getting unique
+    const uniqueUsersData = [];
+    allFiltersData.map((user) => {
+      let pushUser = true;
+      uniqueUsersData.map((uniqueUser) => {
+        if (uniqueUser._id === user._id) pushUser = false;
+      });
+      if (pushUser) {
+        uniqueUsersData.push(user);
+      }
+    });
+    console.log(uniqueUsersData, "uniqueUsersData");
+    setUsersFeed([...uniqueUsersData]);
+  };
   const fetchFeed = async () => {
     const payload = {
       ...profile.locations,
     };
     const response = await user_feed(payload);
     if (response.code === 200) {
-      if (response.cluster_users) {
+      if (response.users) {
         let usersList = [];
         if (checkValidUser()) {
-          response.cluster_users.map((user) => {
+          // filterUser(response.users);
+          response.users.map((user) => {
             if (user._id !== profile._id) {
               usersList.push(user);
             }

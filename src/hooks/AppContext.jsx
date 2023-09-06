@@ -105,19 +105,7 @@ export const AppContextProvider = ({ children }) => {
     };
     const response = await user_feed(payload);
     if (response.code === 200) {
-      if (response.users) {
-        let usersList = [];
-        if (checkValidUser()) {
-          // filterUser(response.users);
-          response.users.map((user) => {
-            if (user._id !== profile._id) {
-              usersList.push(user);
-            }
-          });
-        }
-
-        setUsersFeed([...usersList]);
-      }
+      setUsersFeed([...response.users]);
     }
   };
   const fetchProfile = async () => {

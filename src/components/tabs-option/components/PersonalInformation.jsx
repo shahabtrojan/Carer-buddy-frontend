@@ -55,7 +55,6 @@ function PersonalInformation({
       setInputs({ ...personProfile });
     };
   }, []);
-  console.log(inputs, "inputs");
   return (
     <Box sx={{ width: "100%" }}>
       <div className="row">

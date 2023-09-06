@@ -27,7 +27,6 @@ export default function Login() {
       password: data.get("password"),
     };
     const response = await login_user(postData);
-    console.log(response, "djsalkslk");
     if (response.code === 200) {
       localStorage.setItem("token", response.token);
 

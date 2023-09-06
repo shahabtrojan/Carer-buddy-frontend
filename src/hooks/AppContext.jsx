@@ -52,7 +52,6 @@ export const AppContextProvider = ({ children }) => {
     };
     const response = await user_feed(payload);
     if (response.code === 200) {
-      console.log(checkValidUser(), "ajskdlksa");
       if (response.cluster_users) {
         let usersList = [];
         if (checkValidUser()) {

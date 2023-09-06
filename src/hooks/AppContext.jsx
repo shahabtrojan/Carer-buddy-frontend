@@ -31,19 +31,20 @@ export const AppContextProvider = ({ children }) => {
   }, [profile]);
 
   const checkValidUser = () => {
-    if (!profile) return false;
+    let status = false;
+    if (!profile) status = false;
     try {
-      if (profile.gender === "male") return false;
-      if (profile.gender.length > 0) return true;
-      if (profile.status > 0) return true;
-      if (profile.interests && profile.interests.length > 0) return true;
-      if (profile.diseases && profile.diseases.length > 0) return true;
-      if (profile.latitude && profile.latitude.length > 0) return true;
-      if (profile.longitude && profile.longitude.length > 0) return true;
+      if (profile.gender === "male") status = false;
+      if (profile.gender.length > 0) status = true;
+      if (profile.status > 0) status = true;
+      if (profile.interests && profile.interests.length > 0) status = true;
+      if (profile.diseases && profile.diseases.length > 0) status = true;
+      if (profile.latitude && profile.latitude.length > 0) status = true;
+      if (profile.longitude && profile.longitude.length > 0) status = true;
     } catch (error) {
-      return false;
+      status = false;
     }
-    return false;
+    return status;
   };
   const fetchFeed = async () => {
     const payload = {
@@ -51,6 +52,7 @@ export const AppContextProvider = ({ children }) => {
     };
     const response = await user_feed(payload);
     if (response.code === 200) {
+      console.log(checkValidUser(), "ajskdlksa");
       if (response.cluster_users) {
         let usersList = [];
         if (checkValidUser()) {

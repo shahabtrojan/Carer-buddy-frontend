@@ -135,7 +135,7 @@ export default function RecipeReviewCard({ user }) {
               {user.first_name} {user.last_name}
             </Typography>
           }
-          subheader={moment(user.createdAt).format("DD MMMM YYYY")}
+          subheader={user.distance}
         />
         <CardMedia
           component="img"

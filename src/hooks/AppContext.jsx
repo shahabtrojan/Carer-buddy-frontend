@@ -30,82 +30,59 @@ export const AppContextProvider = ({ children }) => {
     handleGetNotifications();
   }, [profile]);
 
-  const checkValidUser = () => {
-    let status = false;
-    if (!profile) status = false;
-    try {
-      if (profile.gender === "male") status = false;
-      if (profile.gender.length > 0) status = true;
-      if (profile.status > 0) status = true;
-      if (profile.interests && profile.interests.length > 0) status = true;
-      if (profile.diseases && profile.diseases.length > 0) status = true;
-      if (profile.latitude && profile.latitude.length > 0) status = true;
-      if (profile.longitude && profile.longitude.length > 0) status = true;
-    } catch (error) {
-      status = false;
+  function calculateDistance(lat1, lon1, lat2, lon2) {
+    if (lat1 && lat1 && lat2 && lat2) {
+    } else {
+      return false;
     }
-    return status;
-  };
-  const filterUser = (data) => {
-    // same gender
-    const sameGenderData = data.filter(
-      (user) => profile?.gender?.length && user.gender === profile.gender
-    );
-    // same status
-    const sameStatusData = data.filter(
-      (user) => profile?.status?.length > 0 && user.status === profile.status
-    );
+    // Convert latitude and longitude from degrees to radians
+    lat1 = toRadians(lat1);
+    lon1 = toRadians(lon1);
+    lat2 = toRadians(lat2);
+    lon2 = toRadians(lon2);
 
-    // same interest
-    const sameInterestData = [];
-    if (profile.interests.length > 0) {
-      data.map((user) => {
-        profile.interests.map((myInterest) => {
-          if (myInterest.length > 0 && user.interests.includes(myInterest)) {
-            sameInterestData.push(user);
-          }
-        });
-      });
-    }
-    // same disease
-    const sameDiseaseData = [];
-    if (profile.interests.length > 0) {
-      data.map((user) => {
-        profile.diseases.map((myDisease) => {
-          if (myDisease.length > 0 && user.diseases.includes(myDisease)) {
-            sameDiseaseData.push(user);
-          }
-        });
-      });
-    }
-    // all similarities
-    const allFiltersData = [
-      ...sameGenderData,
-      ...sameStatusData,
-      ...sameInterestData,
-      ...sameDiseaseData,
-    ];
-    // getting unique
-    const uniqueUsersData = [];
-    allFiltersData.map((user) => {
-      let pushUser = true;
-      uniqueUsersData.map((uniqueUser) => {
-        if (uniqueUser._id === user._id) pushUser = false;
-      });
-      if (pushUser) {
-        uniqueUsersData.push(user);
-      }
-    });
-    console.log(uniqueUsersData, "uniqueUsersData");
-    setUsersFeed([...uniqueUsersData]);
-  };
+    // Radius of the Earth in kilometers
+    const earthRadius = 6371; // You can also use 3958.8 miles for miles
+
+    // Haversine formula
+    const dlat = lat2 - lat1;
+    const dlon = lon2 - lon1;
+    const a =
+      Math.sin(dlat / 2) ** 2 +
+      Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = earthRadius * c;
+
+    return distance;
+  }
+
+  function toRadians(degrees) {
+    return degrees * (Math.PI / 180);
+  }
+
   const fetchFeed = async () => {
     const payload = {
       ...profile.locations,
     };
     const response = await user_feed(payload);
+    const usersList = [];
     if (response.code === 200) {
-      setUsersFeed([...response.users]);
+      response.users.map((user) => {
+        let distance = calculateDistance(
+          profile.locations.latitude,
+          profile.locations.longitude,
+          user.locations.latitude,
+          user.locations.longitude
+        );
+        if (distance === false) {
+          distance = "";
+        } else {
+          distance = `~${(distance + 1).toFixed(0)}KM`;
+        }
+        const newUser = { ...user, distance };
+        usersList.push(newUser);
+      });
+      setUsersFeed([...usersList]);
     }
   };
   const fetchProfile = async () => {

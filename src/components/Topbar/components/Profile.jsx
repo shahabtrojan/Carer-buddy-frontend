@@ -22,8 +22,8 @@ function Profile() {
       <Tooltip title="Open settings" arrow placement="top">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar
-            alt={profile.first_name[0]}
-            src={profile.image ? profile.image : ""}
+            alt={profile?.first_name?profile?.first_name[0]:'a'}
+            src={profile?.image ? profile.image : ""}
           />
         </IconButton>
       </Tooltip>

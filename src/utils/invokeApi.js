@@ -24,6 +24,13 @@ export const invokeApi = async ({
     }
   } catch (error) {
     let errorObject = error.response.data;
+    if (error?.response?.status === 401) {
+      let token = localStorage.getItem("token");
+      localStorage.clear();
+      if (token) {
+        window.location.reload();
+      }
+    }
     if (errorObject) {
       return errorObject;
     } else {

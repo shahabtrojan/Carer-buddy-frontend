@@ -2,16 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../../hooks/AppContext";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import {
-  Badge,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { IconButton, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import ChatPersonButton from "../../../pages/chat-page/components/ChatPersonButton";
-import { get_requests } from "../../../dal/user";
 import Loader from "../../loader/Loader";
 
 function Notifications() {

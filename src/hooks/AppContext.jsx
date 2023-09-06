@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { get_profile, get_requests, user_feed } from "../dal/user";
+import { get_profile, user_feed } from "../dal/user";
 
 export const useAppContext = () => {
   return React.useContext(AppContext);
@@ -75,10 +75,10 @@ export const AppContextProvider = ({ children }) => {
     }
   };
   const handleGetNotifications = async () => {
-    const response = await get_requests();
-    if (response.code === 200) {
-      setNotifications([...response.requests]);
-    }
+    // const response = await get_requests();
+    // if (response.code === 200) {
+    setNotifications([]);
+    // }
   };
   const handleCheckArray = (value, key) => {
     if (profile && profile[key] && profile[key].length > 0) {

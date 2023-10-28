@@ -1,5 +1,5 @@
 import axios from "axios";
-export const BASE_URL = "http://13.48.183.72:3000/";
+export const BASE_URL = "https://backend.safdar.me/";
 export const invokeApi = async ({
   url,
   method = "POST",
